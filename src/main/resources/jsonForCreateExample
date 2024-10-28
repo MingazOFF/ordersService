@@ -1,0 +1,22 @@
+{
+    "number": "7777720241024",
+    "amount": 57.0,
+    "consumer": "Alina",
+    "address": "Ufa",
+    "paymentType": "card",
+    "deliveryType": "delivery",
+    "details": [
+        {
+            "productCode": 555,
+            "name": "carrot",
+            "quantity": 0.5,
+            "unitPrice": 100.0
+        },
+        {
+            "productCode": 444,
+            "name": "potato",
+            "quantity": 0.7,
+            "unitPrice": 10.0
+        }
+    ]
+}

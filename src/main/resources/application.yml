@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  application:
+    name: ordersService
+server:
+  port: '8090'
+user:
+  numberGenerateServiceURL: ${NUMBER_GENERATE_SERVICE_URL:http://localhost:8091/numbers}

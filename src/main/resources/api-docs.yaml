@@ -1,0 +1,196 @@
+openapi: 3.0.1
+info:
+  title: Order service API
+  description: Number service
+  contact:
+    name: Renat Mingazov
+    email: mingazofff@gmail.com
+  version: 1.0.0
+servers:
+- url: http://localhost:8090
+  description: Generated server url
+tags:
+- name: Main controller
+  description: This is the main and only controller
+paths:
+  /orders:
+    get:
+      tags:
+      - Main controller
+      summary: Get order by id
+      description: Get order fromDB by id
+      operationId: getOrderById
+      parameters:
+      - name: id
+        in: query
+        description: order id
+        required: true
+        schema:
+          type: integer
+          format: int32
+        example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Order"
+    post:
+      tags:
+      - Main controller
+      summary: Create order and return id
+      description: Create new order and return id
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /orders/filter2:
+    get:
+      tags:
+      - Main controller
+      summary: Get orders with productCode and date filter
+      description: Getting a list of orders that do not contain a specified product
+        and were received in a specified time period
+      operationId: getOrdersWithProductAndFromToDateFilter
+      parameters:
+      - name: code
+        in: query
+        description: product code
+        required: true
+        schema:
+          type: integer
+          format: int32
+        example: 111
+      - name: from
+        in: query
+        description: date from
+        required: true
+        schema:
+          type: string
+        example: 2024-10-20
+      - name: to
+        in: query
+        description: date to
+        required: true
+        schema:
+          type: string
+        example: 2024-10-24
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+  /orders/filter1:
+    get:
+      tags:
+      - Main controller
+      summary: Get orders with amount and date filter
+      description: Get orders for a given date and greater than a given total order
+        amount
+      operationId: getOrdersWithDateAndAmountFilter
+      parameters:
+      - name: date
+        in: query
+        description: order's date
+        required: true
+        schema:
+          type: string
+        example: 2024-10-22
+      - name: amount
+        in: query
+        description: order's amount
+        required: true
+        schema:
+          type: number
+          format: double
+        example: 300.5
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+  /orders/all:
+    get:
+      tags:
+      - Main controller
+      summary: Get all orders
+      description: Get all orders fromDB
+      operationId: getAllOrders
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+components:
+  schemas:
+    Detail:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        productCode:
+          type: integer
+          format: int32
+        name:
+          type: string
+        quantity:
+          type: number
+          format: double
+        unitPrice:
+          type: number
+          format: double
+        id_order:
+          type: integer
+          format: int32
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        number:
+          type: string
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+        consumer:
+          type: string
+        address:
+          type: string
+        paymentType:
+          type: string
+        deliveryType:
+          type: string
+        details:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Detail"
